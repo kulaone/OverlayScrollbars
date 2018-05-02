@@ -906,13 +906,17 @@
                     var el;
                     return this.each(function() {
                         el = this;
-                        if (el.addEventListener) {
-                            for (i = 0; i < eventName.length; i++)
-                                el.addEventListener(eventName[i], handler);
-                        }
-                        else if(el.detachEvent) {
-                            for (i = 0; i < eventName.length; i++)
-                                el.attachEvent('on' + eventName[i], handler);
+                        try {
+                            if (el.addEventListener) {
+                                for (i = 0; i < eventName.length; i++)
+                                    el.addEventListener(eventName[i], handler);
+                            }
+                            else if(el.detachEvent) {
+                                for (i = 0; i < eventName.length; i++)
+                                    el.attachEvent('on' + eventName[i], handler);
+                            }
+                        } catch(e) {
+                            // console.log(e);
                         }
                     });
                 },
